@@ -1,16 +1,20 @@
 import express from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { env } from "./config/env.js";
+import authRoutes from "./routes/auth.routes.js"
 
 const app = express();
 
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = Number(env.PORT) || 3000
 
-app.get("/", (req, res) => {
-    res.send("Backend running with TypeScript");
+app.use("/api/auth", authRoutes);
+
+app.get("/", (_req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "College Management API Running",
+    });
 });
 
 app.listen(PORT, () => {

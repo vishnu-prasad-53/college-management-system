@@ -1,5 +1,5 @@
-import { db } from "../db/connection.js";
-import { users } from "../db/schema.js";
+import { db } from "../db/index.js";
+import { users } from "../db/index.js";
 import { eq } from "drizzle-orm";
 import { hashPassword, comparePassword } from "../utils/hash.js";
 import { generateToken } from "../utils/jwt.js";
@@ -28,7 +28,9 @@ export const registerUser = async (data: RegisterInput) => {
         role: data.role || "student",
     }).returning();
 
-    return newUser[0];
+    const { password, ...safeUser } = newUser[0];
+    
+    return safeUser;
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -54,4 +56,18 @@ export const loginUser = async (email: string, password: string) => {
             role: user[0].role,
         }, token,
     };
+};
+
+export const getCurrentUser = async (id: number) => {
+    const user = await db.query.users.findFirst({
+        where: (users, { eq }) => eq(users.id, id),
+    });
+
+    if(!user) {
+        throw new Error("User not found")
+    }
+
+    const { password, ...safeUser } = user;
+
+    return safeUser;
 };

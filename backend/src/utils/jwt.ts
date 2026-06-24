@@ -17,3 +17,16 @@ export const generateToken = (id: number, role: UserRole) => {
         expiresIn: "7d",
     });
 };
+
+export const verifyToken = (token: string) => {
+    if(!env.JWT_SECRET) {
+        throw new Error("JWT_SECRET is missing");
+    }
+
+    return jwt.verify(token, env.JWT_SECRET);
+};
+
+export type JwtPayload = {
+    id: number;
+    role: UserRole;
+}

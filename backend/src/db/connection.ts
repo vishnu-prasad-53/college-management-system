@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { env } from "../config/env.js";
+import * as schema from "./schema.js";
 
 if (!env.DATABASE_URL) {
     throw new Error("DATABASE_URL is missing");
@@ -15,4 +16,4 @@ pool.on("error", (err) => {
     process.exit(-1);
 });
 
-export const db = drizzle(pool);
+export const db = drizzle(pool, {schema});

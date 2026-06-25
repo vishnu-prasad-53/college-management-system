@@ -2,8 +2,14 @@ import { relations } from "drizzle-orm";
 import { departments, faculty, students, studentSubjects, subjects, users } from "./schema.js";
 
 export const usersRelations = relations(users, ({ one }) => ({
-        student: one(students),
-        faculty: one(faculty),
+    student: one(students, {
+        fields: [users.id],
+        references: [students.userId],
+    }),
+    faculty: one(faculty, {
+        fields: [users.id],
+        references: [faculty.userId],
+    }),
 }));
 
 export const studentsRelations = relations(students, ({ one, many }) => ({

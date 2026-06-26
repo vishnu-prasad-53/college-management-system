@@ -38,7 +38,7 @@ export const updateStudentProfile = async (userId: number, data: {
     await db.update(students).set({
         ...data,
         updatedAt: new Date(),
-    }).where(eq(students.id, student.id)).returning();
+    }).where(eq(students.id, student.id));
 
     return getStudentProfile(userId);
 };

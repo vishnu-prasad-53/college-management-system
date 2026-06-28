@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes.js"
 import studentRoutes from "./routes/student.routes.js";
 import facultyRoutes from "./routes/faculty.routes.js";
 import subjectRoutes from "./routes/subject.routes.js";
+import enrollmentRoutes from "./routes/enrollment.routes.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/subjects", subjectRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
 
 app.get("/", (_req, res) => {
     res.status(200).json({

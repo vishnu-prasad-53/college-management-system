@@ -1,4 +1,4 @@
-import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey, date, pgEnum } from "drizzle-orm/pg-core";
 import { UserRole } from "../types/user.types.js";
 
 const timestamps = () => ({
@@ -59,3 +59,17 @@ export const studentSubjects = pgTable("student_subjects", {
         columns: [table.studentId, table.subjectId],
     }),
 }));
+
+export const attendanceStatusEnum = pgEnum("attendance_status", [
+    "present",
+    "absent",
+]);
+
+export const attendance = pgTable("attendance", {
+    id: serial("id").primaryKey(),
+    studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade" }),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    date: date("date").notNull(),
+    status: attendanceStatusEnum("status").notNull(),
+    ...timestamps(),
+});

@@ -1,30 +1,24 @@
 import express from "express";
-import { env } from "./config/env.js";
 import authRoutes from "./routes/auth.routes.js"
 import studentRoutes from "./routes/student.routes.js";
 import facultyRoutes from "./routes/faculty.routes.js";
 import subjectRoutes from "./routes/subject.routes.js";
 import enrollmentRoutes from "./routes/enrollment.routes.js";
+import attendanceRoutes from "./routes/attendance.routes.js";
 
 const app = express();
 
 app.use(express.json());
-
-const PORT = Number(env.PORT) || 3000
 
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
+app.use("/api/attendance", attendanceRoutes);
 
 app.get("/", (_req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "College Management API Running",
-    });
+    res.status(200).json({ success: true, message: "College Management API Running" });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+export default app;

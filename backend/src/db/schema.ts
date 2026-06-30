@@ -1,4 +1,4 @@
-import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey, date, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey, date, pgEnum, unique } from "drizzle-orm/pg-core";
 import { UserRole } from "../types/user.types.js";
 
 const timestamps = () => ({
@@ -73,3 +73,26 @@ export const attendance = pgTable("attendance", {
     status: attendanceStatusEnum("status").notNull(),
     ...timestamps(),
 });
+
+export const gradeEnum = pgEnum("grade", [
+    "A+",
+    "A",
+    "B+",
+    "B",
+    "C",
+    "D",
+    "F",
+]);
+
+export const marks = pgTable("marks",{
+    id: serial("id").primaryKey(),
+    studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade" }),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    internalMarks: integer("internal_marks").notNull(),
+    externalMarks: integer("external_marks").notNull(),
+    totalMarks: integer("total_marks").notNull(),
+    grade: gradeEnum("grade").notNull(),
+    ...timestamps(),
+}, (table) => ({
+    studentSubjectUnique: unique().on(table.studentId, table.subjectId),
+}));

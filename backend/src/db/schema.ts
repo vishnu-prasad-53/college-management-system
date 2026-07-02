@@ -1,9 +1,9 @@
-import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey, date, pgEnum, unique } from "drizzle-orm/pg-core";
+import { pgTable, serial, integer, text, varchar, timestamp, real, primaryKey, date, pgEnum, unique, time } from "drizzle-orm/pg-core";
 import { UserRole } from "../types/user.types.js";
 
 const timestamps = () => ({
     createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
 });
 
 export const users = pgTable("users", {
@@ -96,3 +96,16 @@ export const marks = pgTable("marks",{
 }, (table) => ({
     studentSubjectUnique: unique().on(table.studentId, table.subjectId),
 }));
+
+export const timetable = pgTable("timetable", {
+    id: serial("id").primaryKey(),
+    departmentId: integer("department_id").notNull().references(() => departments.id, { onDelete: "cascade" }),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    facultyId: integer("faculty_id").notNull().references(() => faculty.id, { onDelete: "cascade" }),
+    semester: integer("semester").notNull(),
+    dayOfWeek: varchar("day_of_week", { length: 20 }).notNull(),
+    startTime: time("start_time").notNull(),
+    endTime: time("end_time").notNull(),
+    roomNumber: varchar("room_number", { length: 20 }).notNull(),
+    ...timestamps(),
+});

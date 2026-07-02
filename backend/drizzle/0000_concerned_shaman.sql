@@ -74,6 +74,20 @@ CREATE TABLE "subjects" (
 	CONSTRAINT "subjects_code_unique" UNIQUE("code")
 );
 --> statement-breakpoint
+CREATE TABLE "timetable" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"department_id" integer NOT NULL,
+	"subject_id" integer NOT NULL,
+	"faculty_id" integer NOT NULL,
+	"semester" integer NOT NULL,
+	"day_of_week" varchar(20) NOT NULL,
+	"start_time" time NOT NULL,
+	"end_time" time NOT NULL,
+	"room_number" varchar(20) NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
@@ -96,4 +110,7 @@ ALTER TABLE "student_subjects" ADD CONSTRAINT "student_subjects_subject_id_subje
 ALTER TABLE "students" ADD CONSTRAINT "students_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "students" ADD CONSTRAINT "students_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "subjects" ADD CONSTRAINT "subjects_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "subjects" ADD CONSTRAINT "subjects_faculty_id_faculty_id_fk" FOREIGN KEY ("faculty_id") REFERENCES "public"."faculty"("id") ON DELETE set null ON UPDATE no action;
+ALTER TABLE "subjects" ADD CONSTRAINT "subjects_faculty_id_faculty_id_fk" FOREIGN KEY ("faculty_id") REFERENCES "public"."faculty"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "timetable" ADD CONSTRAINT "timetable_department_id_departments_id_fk" FOREIGN KEY ("department_id") REFERENCES "public"."departments"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "timetable" ADD CONSTRAINT "timetable_subject_id_subjects_id_fk" FOREIGN KEY ("subject_id") REFERENCES "public"."subjects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "timetable" ADD CONSTRAINT "timetable_faculty_id_faculty_id_fk" FOREIGN KEY ("faculty_id") REFERENCES "public"."faculty"("id") ON DELETE cascade ON UPDATE no action;

@@ -109,3 +109,21 @@ export const timetable = pgTable("timetable", {
     roomNumber: varchar("room_number", { length: 20 }).notNull(),
     ...timestamps(),
 });
+
+export const leaveStatusEnum = pgEnum("leave_status", [
+    "pending",
+    "approved",
+    "rejected",
+]);
+
+export const leaveRequests = pgTable("leave_requests", {
+    id: serial("id").primaryKey(),
+    facultyId: integer("faculty_id").notNull().references(() => faculty.id, { onDelete: "cascade" }),
+    leaveType: varchar("leave_type", { length: 30 }).notNull(),
+    reason: text("reason").notNull(),
+    startDate: date("start_date").notNull(),
+    endDate: date("end_date").notNull(),
+    status: leaveStatusEnum("status").notNull().default("pending"),
+    adminRemarks: text("admin_remarks"),
+    ...timestamps(),
+});

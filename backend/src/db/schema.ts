@@ -127,3 +127,19 @@ export const leaveRequests = pgTable("leave_requests", {
     adminRemarks: text("admin_remarks"),
     ...timestamps(),
 });
+
+export const noticeTargetRoleEnum = pgEnum("notice_target_role", [
+    "all",
+    "student",
+    "faculty",
+]);
+
+export const notices = pgTable("notices", {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 150 }).notNull(),
+    content: text("content").notNull(),
+    targetRole: noticeTargetRoleEnum("target_role").notNull().default("all"),
+    publishedAt: timestamp("published_at").defaultNow().notNull(),
+    expiryDate: date("expiry_date"),
+    ...timestamps(),
+});

@@ -1,6 +1,7 @@
 CREATE TYPE "public"."attendance_status" AS ENUM('present', 'absent');--> statement-breakpoint
 CREATE TYPE "public"."grade" AS ENUM('A+', 'A', 'B+', 'B', 'C', 'D', 'F');--> statement-breakpoint
 CREATE TYPE "public"."leave_status" AS ENUM('pending', 'approved', 'rejected');--> statement-breakpoint
+CREATE TYPE "public"."notice_target_role" AS ENUM('all', 'student', 'faculty');--> statement-breakpoint
 CREATE TABLE "attendance" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"student_id" integer NOT NULL,
@@ -54,6 +55,17 @@ CREATE TABLE "marks" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "marks_student_id_subject_id_unique" UNIQUE("student_id","subject_id")
+);
+--> statement-breakpoint
+CREATE TABLE "notices" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"title" varchar(150) NOT NULL,
+	"content" text NOT NULL,
+	"target_role" "notice_target_role" DEFAULT 'all' NOT NULL,
+	"published_at" timestamp DEFAULT now() NOT NULL,
+	"expiry_date" date,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "student_subjects" (

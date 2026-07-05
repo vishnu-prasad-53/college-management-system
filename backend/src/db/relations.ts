@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { departments, faculty, students, studentSubjects, subjects, users, attendance, marks, timetable, leaveRequests } from "./schema.js";
+import { departments, faculty, students, studentSubjects, subjects, users, attendance, marks, timetable, leaveRequests, assignments } from "./schema.js";
 
 export const usersRelations = relations(users, ({ one }) => ({
     student: one(students, {
@@ -38,6 +38,7 @@ export const facultyRelations = relations(faculty, ({ one, many }) => ({
     subjects: many(subjects),
     timetable: many(timetable),
     leaveRequests: many(leaveRequests),
+    assignments: many(assignments),
 }));
 
 export const departmentsRelations = relations(departments, ({ many }) => ({
@@ -60,6 +61,7 @@ export const subjectsRelations = relations(subjects, ({ one, many }) => ({
     attendance: many(attendance),
     marks: many(marks),
     timetable: many(timetable),
+    assignments: many(assignments),
 }));
 
 export const studentSubjectsRelations = relations(studentSubjects, ({ one }) => ({
@@ -113,6 +115,17 @@ export const timetableRelations = relations(timetable, ({ one }) => ({
 export const leaveRequestsRelations = relations(leaveRequests, ({ one }) => ({
     faculty: one(faculty, {
         fields: [leaveRequests.facultyId],
+        references: [faculty.id],
+    }),
+}));
+
+export const assignmentsRelations = relations(assignments, ({ one }) => ({
+    subject: one(subjects, {
+        fields: [assignments.subjectId],
+        references: [subjects.id],
+    }),
+    faculty: one(faculty, {
+        fields: [assignments.facultyId],
         references: [faculty.id],
     }),
 }));

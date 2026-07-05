@@ -10,6 +10,7 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 import timetableRoutes from "./routes/timetable.routes.js";
 import leaveRoutes from "./routes/leave.routes.js";
 import noticeRoutes from "./routes/notice.routes.js";
+import assignmentRoutes from "./routes/assignment.routes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/timetable", timetableRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use("/api/notices", noticeRoutes);
+app.use("/api/assignments", assignmentRoutes);
 
 app.get("/", (_req, res) => {
     res.status(200).json({ success: true, message: "College Management API Running" });

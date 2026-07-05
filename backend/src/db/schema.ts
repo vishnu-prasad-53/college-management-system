@@ -154,3 +154,26 @@ export const assignments = pgTable("assignments", {
     maxMarks: integer("max_marks").notNull(),
     ...timestamps(),
 });
+
+export const submissionStatusEnum = pgEnum("submission_status", [
+    "submitted",
+    "graded",
+]);
+
+export const assignmentSubmissions = pgTable("assignment_submissions", {
+    id: serial("id").primaryKey(),
+    assignmentId: integer("assignment_id").notNull().references(() => assignments.id, { onDelete: "cascade" }),
+    studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade" }),
+    submissionText: text("submission_text"),
+    submissionLink: text("submission_link"),
+    submittedAt: timestamp("submitted_at").defaultNow().notNull(),
+    marksObtained: integer("marks_obtained"),
+    feedback: text("feedback"),
+    status: submissionStatusEnum("status").default("submitted").notNull(),
+    ...timestamps(),
+}, (table) => ({
+    assignmentStudentUnique: unique().on(
+        table.assignmentId,
+        table.studentId
+    ),
+}));

@@ -143,3 +143,14 @@ export const notices = pgTable("notices", {
     expiryDate: date("expiry_date"),
     ...timestamps(),
 });
+
+export const assignments = pgTable("assignments", {
+    id: serial("id").primaryKey(),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    facultyId: integer("faculty_id").notNull().references(() => faculty.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 150 }).notNull(),
+    description: text("description").notNull(),
+    dueDate: date("due_date").notNull(),
+    maxMarks: integer("max_marks").notNull(),
+    ...timestamps(),
+});

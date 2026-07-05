@@ -2,6 +2,18 @@ CREATE TYPE "public"."attendance_status" AS ENUM('present', 'absent');--> statem
 CREATE TYPE "public"."grade" AS ENUM('A+', 'A', 'B+', 'B', 'C', 'D', 'F');--> statement-breakpoint
 CREATE TYPE "public"."leave_status" AS ENUM('pending', 'approved', 'rejected');--> statement-breakpoint
 CREATE TYPE "public"."notice_target_role" AS ENUM('all', 'student', 'faculty');--> statement-breakpoint
+CREATE TABLE "assignments" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"subject_id" integer NOT NULL,
+	"faculty_id" integer NOT NULL,
+	"title" varchar(150) NOT NULL,
+	"description" text NOT NULL,
+	"due_date" date NOT NULL,
+	"max_marks" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "attendance" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"student_id" integer NOT NULL,
@@ -125,6 +137,8 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
+ALTER TABLE "assignments" ADD CONSTRAINT "assignments_subject_id_subjects_id_fk" FOREIGN KEY ("subject_id") REFERENCES "public"."subjects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "assignments" ADD CONSTRAINT "assignments_faculty_id_faculty_id_fk" FOREIGN KEY ("faculty_id") REFERENCES "public"."faculty"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "attendance" ADD CONSTRAINT "attendance_student_id_students_id_fk" FOREIGN KEY ("student_id") REFERENCES "public"."students"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "attendance" ADD CONSTRAINT "attendance_subject_id_subjects_id_fk" FOREIGN KEY ("subject_id") REFERENCES "public"."subjects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "faculty" ADD CONSTRAINT "faculty_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

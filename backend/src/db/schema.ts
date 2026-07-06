@@ -24,8 +24,8 @@ export const departments = pgTable("departments", {
 
 export const students = pgTable("students", {
     id: serial("id").primaryKey(),
-    userId: integer("user_id").references(() => users.id, { onDelete: "cascade"}).notNull().unique(),
-    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade"}).notNull(),
+    userId: integer("user_id").references(() => users.id, { onDelete: "cascade" }).notNull().unique(),
+    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade" }).notNull(),
     usn: varchar("usn", { length: 10 }).notNull().unique(),
     semester: integer("semester").notNull(),
     cgpa: real("cgpa").notNull(),
@@ -34,8 +34,8 @@ export const students = pgTable("students", {
 
 export const faculty = pgTable("faculty", {
     id: serial("id").primaryKey(),
-    userId: integer("user_id").references(() => users.id, { onDelete: "cascade"}).notNull().unique(),
-    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade"}).notNull(),
+    userId: integer("user_id").references(() => users.id, { onDelete: "cascade" }).notNull().unique(),
+    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade" }).notNull(),
     designation: varchar("designation", { length: 30 }).notNull(),
     ...timestamps(),
 });
@@ -46,7 +46,7 @@ export const subjects = pgTable("subjects", {
     code: text("code").notNull().unique(),
     semester: integer("semester").notNull(),
     credits: integer("credits").notNull(),
-    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade"}).notNull(),
+    departmentId: integer("department_id").references(() => departments.id, { onDelete: "cascade" }).notNull(),
     facultyId: integer("faculty_id").references(() => faculty.id, { onDelete: "set null" }),
     ...timestamps(),
 });
@@ -84,7 +84,7 @@ export const gradeEnum = pgEnum("grade", [
     "F",
 ]);
 
-export const marks = pgTable("marks",{
+export const marks = pgTable("marks", {
     id: serial("id").primaryKey(),
     studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade" }),
     subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
@@ -177,3 +177,23 @@ export const assignmentSubmissions = pgTable("assignment_submissions", {
         table.studentId
     ),
 }));
+
+export const examTypeEnum = pgEnum("exam_type", [
+    "internal",
+    "midterm",
+    "end_semester",
+    "practical",
+    "viva",
+]);
+
+export const exams = pgTable("exams", {
+    id: serial("id").primaryKey(),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    examType: examTypeEnum("exam_type").notNull(),
+    examDate: date("exam_date").notNull(),
+    startTime: time("start_time").notNull(),
+    endTime: time("end_time").notNull(),
+    room: varchar("room", { length: 30 }).notNull(),
+    totalMarks: integer("total_marks").notNull(),
+    ...timestamps(),
+});

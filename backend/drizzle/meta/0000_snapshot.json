@@ -1,5 +1,5 @@
 {
-  "id": "7cee24e9-c350-40fd-a9ee-8053cb8f3d67",
+  "id": "a202399c-846a-4600-933b-b261d06023ac",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -791,6 +791,120 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.results": {
+      "name": "results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subject_id": {
+          "name": "subject_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "semester": {
+          "name": "semester",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "internal_marks": {
+          "name": "internal_marks",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "exam_marks": {
+          "name": "exam_marks",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_marks": {
+          "name": "total_marks",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grade": {
+          "name": "grade",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "grade_point": {
+          "name": "grade_point",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "results_student_id_students_id_fk": {
+          "name": "results_student_id_students_id_fk",
+          "tableFrom": "results",
+          "tableTo": "students",
+          "columnsFrom": [
+            "student_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "results_subject_id_subjects_id_fk": {
+          "name": "results_subject_id_subjects_id_fk",
+          "tableFrom": "results",
+          "tableTo": "subjects",
+          "columnsFrom": [
+            "subject_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

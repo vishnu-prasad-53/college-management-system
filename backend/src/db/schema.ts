@@ -197,3 +197,17 @@ export const exams = pgTable("exams", {
     totalMarks: integer("total_marks").notNull(),
     ...timestamps(),
 });
+
+export const results = pgTable("results", {
+    id: serial("id").primaryKey(),
+    studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade" }),
+    subjectId: integer("subject_id").notNull().references(() => subjects.id, { onDelete: "cascade" }),
+    semester: integer("semester").notNull(),
+    internalMarks: integer("internal_marks").notNull(),
+    examMarks: integer("exam_marks").notNull(),
+    totalMarks: integer("total_marks").notNull(),
+    grade: varchar("grade", { length: 5 }).notNull(),
+    gradePoint: real("grade_point").notNull(),
+    status: varchar("status", { length: 10 }).notNull(),
+    ...timestamps(),
+});

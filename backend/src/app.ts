@@ -14,6 +14,7 @@ import assignmentRoutes from "./routes/assignment.routes.js";
 import assignmentSubmissionRoutes from "./routes/assignmentSubmission.routes.js";
 import examRoutes from "./routes/exam.routes.js";
 import resultRoutes from "./routes/result.routes.js";
+import libraryRoutes from "./routes/library.routes.js";
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api/assignments", assignmentRoutes);
 app.use("/api/assignment-submissions", assignmentSubmissionRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/results", resultRoutes);
+app.use("/api/library", libraryRoutes);
 
 app.get("/", (_req, res) => {
     res.status(200).json({ success: true, message: "College Management API Running" });

@@ -221,5 +221,25 @@ export const announcements = pgTable("announcements", {
     audience: varchar("audience", { length: 20 }).notNull(),
     priority: varchar("priority", { length: 20 }).notNull(),
     expiryDate: date("expiry_date"),
+export const books = pgTable("books", {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 200 }).notNull(),
+    author: varchar("author", { length: 150 }).notNull(),
+    isbn: varchar("isbn", { length: 20 }).notNull().unique(),
+    publisher: varchar("publisher", { length: 150 }).notNull(),
+    category: varchar("category", { length: 100 }).notNull(),
+    totalCopies: integer("total_copies").notNull(),
+    availableCopies: integer("available_copies").notNull(),
+    ...timestamps(),
+});
+
+export const borrowedBooks = pgTable("borrowed_books", {
+    id: serial("id").primaryKey(),
+    studentId: integer("student_id").notNull().references(() => students.id, { onDelete: "cascade", }),
+    bookId: integer("book_id").notNull().references(() => books.id, { onDelete: "cascade", }),
+    borrowDate: date("borrow_date").notNull(),
+    dueDate: date("due_date").notNull(),
+    returnDate: date("return_date"),
+    status: varchar("status", { length: 20 }).notNull(),
     ...timestamps(),
 });

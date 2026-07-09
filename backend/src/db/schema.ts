@@ -211,3 +211,15 @@ export const results = pgTable("results", {
     status: varchar("status", { length: 10 }).notNull(),
     ...timestamps(),
 });
+
+export const announcements = pgTable("announcements", {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 200 }).notNull(),
+    content: text("content").notNull(),
+    postedBy: integer("posted_by").notNull().references(() => users.id, { onDelete: "cascade" }),
+    departmentId: integer("department_id").references(() => departments.id, { onDelete: "set null" }),
+    audience: varchar("audience", { length: 20 }).notNull(),
+    priority: varchar("priority", { length: 20 }).notNull(),
+    expiryDate: date("expiry_date"),
+    ...timestamps(),
+});

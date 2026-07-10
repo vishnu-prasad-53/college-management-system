@@ -221,6 +221,9 @@ export const announcements = pgTable("announcements", {
     audience: varchar("audience", { length: 20 }).notNull(),
     priority: varchar("priority", { length: 20 }).notNull(),
     expiryDate: date("expiry_date"),
+    ...timestamps(),
+})
+
 export const books = pgTable("books", {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 200 }).notNull(),

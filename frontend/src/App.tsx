@@ -1,14 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import Login from "./pages/auth/Login";
+
+import AdminDashboard from "./pages/admin/Dashboard";
+import FacultyDashboard from "./pages/faculty/Dashboard";
+import StudentDashboard from "./pages/student/Dashboard";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
-
-const Login = () => {
-  return <h1>Login Page</h1>;
-};
-
-const Dashboard = () => {
-  return <h1>Dashboard</h1>;
-};
+import RoleProtectedRoute from "./routes/RoleProtectedRoute";
 
 function App() {
   return (
@@ -22,10 +21,24 @@ function App() {
         element={<Login />}
       />
       <Route element={<ProtectedRoute />}>
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
+        <Route element={<RoleProtectedRoute allowedRoles={["admin"]} />}>
+          <Route
+            path="/admin/dashboard"
+            element={<AdminDashboard />}
+          />
+        </Route>
+        <Route element={<RoleProtectedRoute allowedRoles={["faculty"]} />}>
+          <Route
+            path="/faculty/dashboard"
+            element={<FacultyDashboard />}
+          />
+        </Route>
+        <Route element={<RoleProtectedRoute allowedRoles={["student"]} />}>
+          <Route
+            path="/student/dashboard"
+            element={<StudentDashboard />}
+          />
+        </Route>
       </Route>
       <Route
         path="*"

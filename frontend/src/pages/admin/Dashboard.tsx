@@ -1,6 +1,10 @@
+import DashboardLayout from '../../components/DashboardLayout';
+
 const AdminDashboard = () => {
     return (
-        <h1>Admin Dashboard</h1>
+        <DashboardLayout>
+            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        </DashboardLayout>
     );
 };
 

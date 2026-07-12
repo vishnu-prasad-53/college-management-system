@@ -1,6 +1,10 @@
+import DashboardLayout from '../../components/DashboardLayout';
+
 const FacultyDashboard = () => {
     return (
-        <h1>Faculty Dashboard</h1>
+        <DashboardLayout>
+            <h1 className="text-3xl font-bold">Faculty Dashboard</h1>
+        </DashboardLayout>
     );
 };
 

@@ -9,6 +9,8 @@ import StudentDashboard from "./pages/student/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleProtectedRoute from "./routes/RoleProtectedRoute";
 
+import Students from "./pages/admin/Students";
+
 function App() {
   return (
     <Routes>
@@ -25,6 +27,10 @@ function App() {
           <Route
             path="/admin/dashboard"
             element={<AdminDashboard />}
+          />
+          <Route
+            path="/admin/students"
+            element={<Students />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["faculty"]} />}>

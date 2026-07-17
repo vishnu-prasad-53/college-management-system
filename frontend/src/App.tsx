@@ -11,6 +11,7 @@ import RoleProtectedRoute from "./routes/RoleProtectedRoute";
 
 import Students from "./pages/admin/Students";
 import Faculty from "./pages/admin/Faculty";
+import Departments from "./pages/admin/Departments";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route
             path="/admin/faculty"
             element={<Faculty />}
+          />
+          <Route
+            path="/admin/departments"
+            element={<Departments />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["faculty"]} />}>

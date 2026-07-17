@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js"
+import departmentRoutes from "./routes/department.routes.js";
 import studentRoutes from "./routes/student.routes.js";
 import facultyRoutes from "./routes/faculty.routes.js";
 import subjectRoutes from "./routes/subject.routes.js";
@@ -27,6 +28,7 @@ app.use(cors({
 }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/departments", departmentRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/subjects", subjectRoutes);

@@ -14,6 +14,8 @@ import Faculty from "./pages/admin/Faculty";
 import Departments from "./pages/admin/Departments";
 import Subjects from "./pages/admin/Subjects";
 
+import Attendance from "./pages/faculty/Attendance";
+
 function App() {
   return (
     <Routes>
@@ -52,6 +54,10 @@ function App() {
           <Route
             path="/faculty/dashboard"
             element={<FacultyDashboard />}
+          />
+          <Route
+            path="/faculty/attendance"
+            element={<Attendance />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["student"]} />}>

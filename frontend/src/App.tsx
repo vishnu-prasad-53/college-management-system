@@ -15,6 +15,7 @@ import Departments from "./pages/admin/Departments";
 import Subjects from "./pages/admin/Subjects";
 
 import Attendance from "./pages/faculty/Attendance";
+import Marks from "./pages/faculty/Marks";
 
 function App() {
   return (
@@ -58,6 +59,10 @@ function App() {
           <Route
             path="/faculty/attendance"
             element={<Attendance />}
+          />
+          <Route
+            path="/faculty/marks"
+            element={<Marks />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["student"]} />}>

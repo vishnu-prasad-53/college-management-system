@@ -16,6 +16,7 @@ import Subjects from "./pages/admin/Subjects";
 
 import Attendance from "./pages/faculty/Attendance";
 import Marks from "./pages/faculty/Marks";
+import Assignments from "./pages/faculty/Assignments";
 
 function App() {
   return (
@@ -63,6 +64,10 @@ function App() {
           <Route
             path="/faculty/marks"
             element={<Marks />}
+          />
+          <Route
+            path="/faculty/assignments"
+            element={<Assignments />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["student"]} />}>

@@ -18,6 +18,7 @@ import Attendance from "./pages/faculty/Attendance";
 import Marks from "./pages/faculty/Marks";
 import Assignments from "./pages/faculty/Assignments";
 import Timetable from "./pages/faculty/Timetable";
+import Announcements from "./pages/faculty/Announcements";
 
 function App() {
   return (
@@ -73,6 +74,10 @@ function App() {
           <Route
             path="/faculty/timetable"
             element={<Timetable />}
+          />
+          <Route
+            path="/faculty/announcements"
+            element={<Announcements />}
           />
         </Route>
         <Route element={<RoleProtectedRoute allowedRoles={["student"]} />}>

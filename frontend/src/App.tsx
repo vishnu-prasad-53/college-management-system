@@ -20,6 +20,8 @@ import Assignments from "./pages/faculty/Assignments";
 import Timetable from "./pages/faculty/Timetable";
 import Announcements from "./pages/faculty/Announcements";
 
+import Profile from "./pages/student/Profile";
+
 function App() {
   return (
     <Routes>
@@ -84,6 +86,10 @@ function App() {
           <Route
             path="/student/dashboard"
             element={<StudentDashboard />}
+          />
+          <Route
+            path="/student/profile"
+            element={<Profile />}
           />
         </Route>
       </Route>
